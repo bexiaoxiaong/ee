@@ -53,8 +53,6 @@
 	</view>
 </template>
 
-
-
 <script>
 	export default {
 		onLoad() {
@@ -154,7 +152,6 @@
 	}
 </script>
 
-
 <style>
 	.page {
 		display: flex;
@@ -178,7 +175,7 @@
 
 	/* 第1块：logo */
 	.logo-section {
-		margin-bottom: 40rpx;
+		margin-bottom: -20rpx; /* Adjusted to make QR code top -20rpx from logo bottom */
 	}
 
 	.logo {
@@ -280,7 +277,6 @@
 		color: #222;
 		font-weight: bold;
 	}
-
 
 	/* 第5块：底部提示 */
 	.footer-section {
