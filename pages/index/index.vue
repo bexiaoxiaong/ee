@@ -2,7 +2,8 @@
 	<view class="page" ref="pageRef" :style="{ backgroundImage: 'url(' + bgUrl + ')' }">
 		<!-- 第1块：logo -->
 		<view class="section logo-section">
-			<image class="logo" :src="logoUrl" @tap="changeImage"></image>
+			<image class="logo" :src="logoUrl" @tap="changeImage" :style="{ height: logoHeight + 'px' }" mode="widthFix"
+				@load="onImageLoad"></image>
 		</view>
 
 		<!-- 第2块：二维码 -->
@@ -12,7 +13,7 @@
 
 		<!-- 第3块：票号和三栏信息 -->
 		<view class="section ticket-section">
-			<text class="ticket-text" @tap="changeTicketNumber">票券細號：{{ ticketNumber }}</text>
+			<text class="ticket-text" @tap="changeTicketNumber">票券编号：{{ ticketNumber }}</text>
 
 			<view class="ticket-info">
 				<view class="info-item">
@@ -64,14 +65,14 @@
 
 	export default {
 		onLoad() {
-			this.generateQRCode('默认二维码内容');
+			this.generateQRCode('https://bearticketrule.netlify.app/#/');
 		},
 		data() {
 			return {
 				logoUrl: '/static/logo.png',
 				qrUrl: '',
 				bgUrl: '', // 当前背景图
-
+				logoHeight: 0,
 				backgroundOptions: [{
 						name: '蓝色星空',
 						url: '/static/bg1.png'
@@ -93,7 +94,6 @@
 						url: null // Placeholder for custom image
 					}
 				],
-
 				ticketNumber: '4311314',
 				ticketType: '成人票',
 				ticketPrice: '¥88',
@@ -108,7 +108,15 @@
 			this.pageRef = this.$refs.pageRef;
 		},
 		methods: {
-			
+			onImageLoad(e) {
+				const {
+					width,
+					height
+				} = e.detail;
+				const containerWidth = uni.getSystemInfoSync().windowWidth; // 获取屏幕宽度
+				const scale = height / width;
+				this.logoHeight = containerWidth * scale;
+			},
 			async onSaveTiket() {
 				if (!navigator.clipboard || !window.ClipboardItem) {
 					uni.showModal({
@@ -118,8 +126,8 @@
 					});
 					return;
 				}
-				
-				
+
+
 				uni.showActionSheet({
 					itemList: ['复制', '保存'],
 					success: async (res) => {
@@ -134,26 +142,26 @@
 						const canvas = await html2canvas(element, {
 							useCORS: true
 						});
-						
+
 						// ✅ 保存
 						if (res.tapIndex === 1) {
-						 const dataUrl = canvas.toDataURL('image/png');
-						
-						  if (/iP(hone|od|ad)/.test(navigator.userAgent)) {
-						    // iOS Safari 兼容处理
-						    window.open(dataUrl, '_blank');
-						    uni.showToast({
-						      title: '长按图片保存',
-						      icon: 'none'
-						    });
-						  } else {
-						    const a = document.createElement('a');
-						    a.href = dataUrl;
-						    a.download = 'ticket.png';
-						   document.body.appendChild(a); // 有些浏览器需要插入到 DOM
-						   a.click();
-						   document.body.removeChild(a);
-						  }
+							const dataUrl = canvas.toDataURL('image/png');
+
+							if (/iP(hone|od|ad)/.test(navigator.userAgent)) {
+								// iOS Safari 兼容处理
+								window.open(dataUrl, '_blank');
+								uni.showToast({
+									title: '长按图片保存',
+									icon: 'none'
+								});
+							} else {
+								const a = document.createElement('a');
+								a.href = dataUrl;
+								a.download = 'ticket.png';
+								document.body.appendChild(a); // 有些浏览器需要插入到 DOM
+								a.click();
+								document.body.removeChild(a);
+							}
 						}
 
 						// ✅ 复制
@@ -255,7 +263,7 @@
 			},
 			changeTicketNumber() {
 				uni.showModal({
-					title: '修改票券細號',
+					title: '修改票券编号',
 					content: '当前：' + this.ticketNumber,
 					editable: true,
 					placeholderText: '请输入新编号',
@@ -317,10 +325,16 @@
 		margin-bottom: -20rpx;
 	}
 
+	/* 		.logo {
+		width: 100%;
+		height: auto;
+	object-fit: contain;
+	} */
+
+
 	.logo {
 		width: 100%;
-		height: 120px;
-		object-fit: cover;
+		display: block;
 	}
 
 	/* 二维码 */

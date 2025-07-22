@@ -1,7 +1,7 @@
 {
   "../../../HBuilderX/plugins/uniapp-cli-vite/\u0000plugin-vue:export-helper": [
-    "/assets/pages-index-index.BTrweVbc.js",
-    "/assets/index-AsGghyPi.css"
+    "/assets/pages-index-index.Dg2rXr0Y.js",
+    "/assets/index-imvY-JnF.css"
   ],
   "../../../HBuilderX/plugins/uniapp-cli-vite/\u0000vite/modulepreload-polyfill.js": [],
   "../../../HBuilderX/plugins/uniapp-cli-vite/\u0000vite/preload-helper.js": [],
@@ -21,11 +21,11 @@
   "manifest-json-js": [],
   "pages-json-js": [],
   "pages/index/index.vue": [
-    "/assets/pages-index-index.BTrweVbc.js",
-    "/assets/index-AsGghyPi.css"
+    "/assets/pages-index-index.Dg2rXr0Y.js",
+    "/assets/index-imvY-JnF.css"
   ],
-  "pages/index/index.vue?vue&type=style&index=0&scoped=50f76a10&lang.css": [
-    "/assets/pages-index-index.BTrweVbc.js",
-    "/assets/index-AsGghyPi.css"
+  "pages/index/index.vue?vue&type=style&index=0&scoped=d96d198c&lang.css": [
+    "/assets/pages-index-index.Dg2rXr0Y.js",
+    "/assets/index-imvY-JnF.css"
   ]
 }
