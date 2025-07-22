@@ -55,7 +55,6 @@
 	</view>
 </template>
 
-
 <script>
 	// 注意要安装此依赖或使用 HBuilderX 的二维码插件
 	import {
@@ -88,6 +87,10 @@
 					{
 						name: '没有背景',
 						url: ''
+					},
+					{
+						name: '自定义背景',
+						url: null // Placeholder for custom image
 					}
 				],
 
@@ -192,7 +195,20 @@
 					itemList: options,
 					success: res => {
 						const selected = this.backgroundOptions[res.tapIndex];
-						this.bgUrl = selected.url;
+						if (selected.name === '自定义背景') {
+							uni.chooseImage({
+								count: 1,
+								sizeType: ['original', 'compressed'],
+								sourceType: ['album', 'camera'],
+								success: (res) => {
+									if (res.tempFilePaths.length > 0) {
+										this.bgUrl = res.tempFilePaths[0];
+									}
+								}
+							});
+						} else {
+							this.bgUrl = selected.url;
+						}
 					}
 				});
 			},
